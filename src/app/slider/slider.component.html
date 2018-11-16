@@ -1,8 +1,0 @@
-<div class="slider-wrapper">
-  <div class="slider">
-    <div *ngFor="let slide of slides" class="slide {{slide.className}}" [ngClass]="{'active': slide.active}" [innerHtml]="slide.html"></div>
-  </div>
-  <ul class="controls">
-    <li *ngFor="let slide of slides; let i = index" (click)="toSlide(i)" [ngClass]="{'active': slide.active}"><a></a></li>
-  </ul>
-</div>
