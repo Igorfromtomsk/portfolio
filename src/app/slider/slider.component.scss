@@ -1,0 +1,426 @@
+@import '../../assets/variables';
+
+.slider {
+  padding-top: 70%;
+  position: relative;
+
+  &-wrapper {
+    height: 100%;
+
+    .controls {
+      height: 15%;
+      padding: 2rem 0;
+      margin: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+
+      li {
+        list-style: none;
+        padding: 0px 1rem;
+
+        a {
+          cursor: pointer;
+          height: 1rem;
+          width: 2rem;
+          display: block;
+          overflow: hidden;
+          border-bottom-width: 0;
+          position: relative;
+
+          &:before {
+            content: '';
+            background-color: #5c5c5c;
+            display: block;
+            width: 100%;
+            height: 15%;
+            -webkit-transition: ease .25s;
+            -moz-transition: ease .25s;
+            -ms-transition: ease .25s;
+            -o-transition: ease .25s;
+            transition: ease .25s;
+          }
+
+          &:after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 15%;
+            background-color: $c-yellow;
+            transform: translateX(-100%);
+            position: absolute;
+            top: 0;
+          }
+        }
+
+        &:not(.active) a:hover:before {
+          height: 50%;
+        }
+
+        &.active a:after {
+          transform: translateX(0);
+        }
+      }
+    }
+
+    .slide {
+      width: 100%;
+      height: 100%;
+      background-color: #bbb;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      -webkit-transition: ease .25s;
+      -moz-transition: ease .25s;
+      -ms-transition: ease .25s;
+      -o-transition: ease .25s;
+      transition: ease .25s;
+
+      &.active {
+        opacity: 1;
+      }
+
+      &.authorization-demo {
+        background-color: transparent;
+
+        &.active::ng-deep .login-box__lines {
+          animation: login-box__dash 15s linear forwards;
+        }
+      }
+
+      &.preloader {
+        background: radial-gradient(closest-corner, rgb(255, 255, 255), rgb(255, 255, 255), #ffffff85);
+
+        &.active::ng-deep {
+          .dbh_shadow_svg {
+            animation: 12s transform-back infinite;
+          }
+          .dbh_main_svg {
+            animation: 12s transform-front infinite;
+          }
+          .global_x5F_shadow {
+            animation: spin-with-reverse 12s infinite;
+          }
+          .local_x5F_shadow {
+            animation: spin 12s infinite linear;
+          }
+          .local_x5F_shadow {
+            animation: spin 12s infinite linear;
+
+          }
+          .dbh_shadow {
+            animation: spin-with-reverse 16s infinite;
+          }
+          .dbh_blue {
+            animation: spin-with-reverse 12s infinite;
+          }
+          #dbh_contour {
+            animation: spin 12s infinite;
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .preloader-type-dbh {
+    padding-top: 60%;
+    width: 60%;
+    position: relative;
+
+    & > svg {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      -moz-transform: translate(-50%, -50%);
+      -ms-transform: translate(-50%, -50%);
+      -o-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      height: calc(100% - 30px);
+    }
+
+    .dbh_shadow_svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 0;
+    }
+
+    .local_x5F_shadow,
+    .global_x5F_shadow,
+    .dbh_shadow,
+    .dbh_blue,
+    #dbh_contour {
+      transform-origin: center center;
+    }
+
+    .global_x5F_shadow {
+      opacity: 0.5;
+      fill: rgba(36, 98, 156, 0.2);
+    }
+    .local_x5F_shadow {
+      opacity: 0;
+      fill: rgba(36, 98, 156, 0.49);
+    }
+    .dbh_shadow {
+      opacity: 0.5;
+      clip-path: url(#dbh_contour_1);
+      fill: #24629c;
+    }
+    .dbh_blue {
+      opacity: 0;
+      clip-path: url(#dbh_contour_1);
+      fill: rgba(36, 98, 156, 0.2);
+    }
+
+    @keyframes spin {
+      0% {
+        transform: rotate(0deg)
+      }
+      50% {
+        transform: rotate(180deg)
+      }
+      100% {
+        transform: rotate(360deg)
+      }
+    }
+
+    @keyframes spin-with-reverse {
+      0% {
+        transform: rotate(0deg)
+      }
+      25% {
+        transform: rotate(180deg)
+      }
+      50% {
+        transform: rotate(360deg)
+      }
+      75% {
+        transform: rotate(180deg)
+      }
+      100% {
+        transform: rotate(0deg)
+      }
+    }
+
+    @keyframes move {
+      0% {
+        transform: translate(calc(-50% - 10px), calc(-50% - 10px));
+      }
+      15% {
+        transform: translate(calc(-50% - 10px), calc(-50% - 10px));
+      }
+      30% {
+        transform: translate(calc(-50% + 10px), calc(-50% - 10px));
+      }
+      45% {
+        transform: translate(calc(-50% + 10px), calc(-50% - 10px));
+      }
+      60% {
+        transform: translate(calc(-50% + 10px), calc(-50% + 10px));
+      }
+      75% {
+        transform: translate(calc(-50% + 10px), calc(-50% + 10px));
+      }
+      100% {
+        transform: translate(calc(-50% - 10px), calc(-50% - 10px));
+      }
+    }
+
+    @keyframes transform-back {
+      0% { transform: translate(calc(-50% - 20px), calc(-50% - 20px)) rotateX(10deg) rotateY(10deg); }
+      15% { transform: translate(calc(-50% - 20px), calc(-50% - 20px)) rotateX(10deg) rotateY(10deg); }
+      30% { transform: translate(calc(-50% - 0px), calc(-50% - 20px)) rotateX(-10deg) rotateY(10deg); }
+      45% { transform: translate(calc(-50% - 0px), calc(-50% - 20px)) rotateX(-10deg) rotateY(10deg); }
+      60% { transform: translate(calc(-50% - 20px), calc(-50% - 0px)) rotateX(10deg) rotateY(-10deg); }
+      75% { transform: translate(calc(-50% - 20px), calc(-50% - 0px)) rotateX(10deg) rotateY(-10deg); }
+      100% { transform: translate(calc(-50% - 20px), calc(-50% - 20px)) rotateX(10deg) rotateY(10deg); }
+    }
+
+    @keyframes transform-front {
+      0% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(10deg); }
+      15% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(10deg); }
+      30% { transform: translate(-50%, -50%) rotateX(-10deg) rotateY(10deg); }
+      45% { transform: translate(-50%, -50%) rotateX(-10deg) rotateY(10deg); }
+      60% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(-10deg); }
+      75% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(-10deg); }
+      100% { transform: translate(-50%, -50%) rotateX(10deg) rotateY(10deg); }
+    }
+  }
+
+  .login-box {
+    align-self: flex-end;
+    height: 70%;
+    width: 70%;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, .15);
+    background-color: #bbb;
+    border-radius: 4px;
+    overflow: hidden;
+    font-size: 1rem;
+    color: black;
+    position: relative;
+
+    &__bg {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translate(50%, -64%);
+      animation: login-box__spin 40s linear infinite;
+      transform-origin: calc(50% + 50%) calc(50% - 64%);
+      height: 200%;
+    }
+
+    &__lines {
+      stroke: url(#login-box__grad);
+      fill: transparent;
+      opacity: 1;
+      stroke-width: 1px;
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000px;
+    }
+
+    &__texture {
+      width: 100%;
+      height: 100%;
+      opacity: .3;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+
+    @keyframes login-box__dash {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+
+    @keyframes login-box__spin {
+      from {
+        transform: rotate(0deg) translate(50%, -64%);
+      }
+      to {
+        transform: rotate(-360deg) translate(50%, -64%);
+      }
+    }
+
+    &__title {
+      margin: 1rem 0 2rem;
+      font-size: 2em;
+      opacity: .75;
+      white-space: nowrap;
+      font-weight: bold;
+    }
+
+    &__subtitle {
+      margin: -2rem 0 2rem;
+      font-size: .875em;
+      opacity: .75;
+      display: block;
+      font-family: 'Open Sans', sans-serif;
+    }
+
+    &__last-form-group {
+      flex-grow: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+    }
+
+    &__form {
+      height: 100%;
+      max-width: 50%;
+      position: relative;
+      z-index: 2;
+
+      input {
+        font-family: 'Open Sans', sans-serif;
+        color: black;
+        background-color: rgba(0, 0, 0, .1);
+        border-color: rgba(0, 0, 0, .2);
+        border-radius: 3px;
+
+        &:focus {
+          background-color: rgba(0, 0, 0, .15);
+        }
+      }
+    }
+
+    &__submit {
+      font-family: 'Open Sans', sans-serif;
+      border: none;
+      background: none;
+      color: $c-positive;
+      font-weight: bold;
+      transition: ease .25s;
+      position: relative;
+      font-size: 1rem;
+      cursor: pointer;
+      padding: .5rem 1rem;
+      text-transform: uppercase;
+      border-radius: .25rem;
+      overflow: hidden;
+
+      &:after,
+      &:before {
+        content: '';
+        position: absolute;
+        border: 2px solid $c-positive;
+        transition: ease .25s;
+        opacity: 0;
+      }
+
+      &:before {
+        top: 0;
+        left: 50%;
+        border-left-width: 0;
+        border-right-width: 0;
+        transform: translateX(-50%);
+        width: 0;
+        height: 100%;
+      }
+
+      &:after {
+        left: 0;
+        top: 50%;
+        border-top-width: 0;
+        border-bottom-width: 0;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 0;
+      }
+
+      &:hover {
+        letter-spacing: .5rem;
+        width: 100%;
+
+        &:after,
+        &:before {
+          opacity: 1;
+        }
+
+        &:after {
+          height: 100%;
+        }
+
+        &:before {
+          width: 100%;
+        }
+      }
+    }
+
+    & > .d-flex,
+    & > .d-flex .col {
+      height: 100%;
+    }
+  }
+}
