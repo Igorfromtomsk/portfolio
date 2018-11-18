@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   backgroundLavaLamp: LavaLampBg;
   hexagonalGrid: HexagonalGrid;
   terminal: Terminal;
+  pageScroller: PageScroller;
 
   constructor() {
     this.backgroundLavaLamp = new LavaLampBg();
@@ -30,14 +31,17 @@ export class AppComponent implements OnInit {
       ballsDistance: 170
     });
     this.terminal = new Terminal();
-
-    const pageScroller = new PageScroller();
+    this.pageScroller = new PageScroller();
   }
 
   ngOnInit() {
     this.backgroundLavaLamp.init();
     this.hexagonalGrid.make();
     this.terminal.make();
+  }
+
+  scrollToTop() {
+    this.pageScroller.scrollToTop();
   }
 
   toggleDescription(section: string, e) {

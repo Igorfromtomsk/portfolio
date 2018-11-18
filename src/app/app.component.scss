@@ -307,7 +307,8 @@
     &:after {
       content: '';
       position: absolute;
-      left: 0;
+      left: 50%;
+      top: 50%;
       width: 1.6rem;
       height: 2px;
       background-color: $c-yellow;
@@ -316,18 +317,16 @@
       -ms-transition: ease .25s;
       -o-transition: ease .25s;
       transition: ease .25s;
-      transform: translateX(100%);
+      transform-origin: center center;
       opacity: 0;
     }
 
     &:before {
-      transform-origin: left bottom;
-      bottom: 0;
+      transform: translate(-50%, -50%) rotate(45deg);
     }
 
     &:after {
-      transform-origin: left top;
-      top: 0;
+      transform: translate(-50%, -50%) rotate(-45deg);
     }
   }
 
@@ -580,6 +579,9 @@
 }
 
 .social-list {
+  margin: 0;
+  padding: 0;
+
   &__item {
     list-style: none;
     display: inline-block;
@@ -622,5 +624,44 @@
     &:hover {
       transform: scale(1.2);
     }
+  }
+}
+
+.to-top-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+  right: 0;
+  top: 0;
+  width: 2rem;
+  height: 100%;
+  -webkit-transition: ease .25s;
+  -moz-transition: ease .25s;
+  -ms-transition: ease .25s;
+  -o-transition: ease .25s;
+  transition: ease .25s;
+  transform: translate(100%, 0);
+  background-color: rgba(0, 0, 0, .05);
+  border: none;
+
+  span {
+    display: block;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.7);
+    font-family: 'Open Sans', sans-serif;
+    -webkit-transform-origin: center center;
+    -moz-transform-origin: center center;
+    -ms-transform-origin: center center;
+    -o-transform-origin: center center;
+    transform-origin: center center;
+    transform: rotate(-90deg);
+    white-space: nowrap;
+    font-size: .875rem;
+  }
+
+  &:hover {
+    background-color: rgba(0, 0, 0, .25);
   }
 }

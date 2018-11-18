@@ -3,7 +3,11 @@
 
 body {
   color: white;
-  font-family: Merriweather;
+  font-family: Merriweather, sans-serif;
+
+  &.scrolled .to-top-link {
+    transform: translate(0, 0);
+  }
 }
 
 p {

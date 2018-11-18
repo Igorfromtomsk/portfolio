@@ -5,6 +5,7 @@ export class Terminal {
   private history: string[] = [];
   private flow: HTMLElement;
   private path: string;
+  private historyIndex = 0;
 
   constructor() {
     const self = this;
@@ -77,35 +78,59 @@ export class Terminal {
 
     this.frameDoc.designMode = 'on';
 
-    this.frameDoc.addEventListener('keypress', (e) => {
-      if (e.charCode === 13) {
+    this.frameDoc.addEventListener('keydown', (e) => {
+      if (e.keyCode === 13) {
         e.preventDefault();
 
         const command = this.frameDoc.getElementsByTagName('body')[0].innerHTML;
         self.doCommand(command);
+      } else if (e.keyCode === 38) {
+        e.preventDefault();
+        self.historyIndex = (++self.historyIndex > self.history.length) ? self.history.length : self.historyIndex;
+        self.clearInput();
+        self.frameDoc.getElementsByTagName('body')[0].innerHTML = self.history[self.history.length - self.historyIndex];
+      } else if (e.keyCode === 40) {
+        e.preventDefault();
+        self.historyIndex = (--self.historyIndex < 1) ? 1 : self.historyIndex;
+        self.clearInput();
+        self.frameDoc.getElementsByTagName('body')[0].innerHTML = self.history[self.history.length - self.historyIndex];
       }
     });
   }
 
   doCommand(command) {
+    this.historyIndex = 0;
+
     if (!command) {
       return false;
     }
 
-    this.history.push(command);
-
     this.writeLn(this.path + command);
 
     const commandName = command.split(' ')[0];
-    const attrs = command.split(' ');
-    attrs.shift();
     const commandIsExist = !!this.commands.filter(cmd => cmd.name === commandName).length;
+    let similarCommandIsExist = false;
+    let similarCommand = '';
+
+    for (let i = 0; i < this.commands.length; ++i) {
+      if (commandName.substr(1) === this.commands[i].name.substr(1)) {
+        similarCommandIsExist = true;
+        similarCommand = this.commands[i].name;
+      }
+    }
+
 
     if (commandIsExist) {
       this.currentCommand = command;
+      this.history.push(command);
       this.doAction(commandName);
     } else {
       this.writeLn(`Command not found: ${command}`);
+
+      if (similarCommandIsExist) {
+        this.writeLn(`Maybe you mean ${similarCommand} ?`);
+      }
+
       this.clearInput();
     }
   }
