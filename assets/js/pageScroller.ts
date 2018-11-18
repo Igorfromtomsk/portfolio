@@ -1,6 +1,3 @@
-import {Injectable} from '@angular/core';
-
-@Injectable()
 export class PageScroller {
   private pages: NodeListOf<HTMLElement>;
   private currentPage: number;
@@ -51,14 +48,25 @@ export class PageScroller {
         } else if (self.delta < 0) {
           self.prevPage();
         }
+
+        toggleScrollerClass();
       }
 
       e.preventDefault ? e.preventDefault() : (e.returnValue = false);
     }
 
+    function toggleScrollerClass() {
+      if (self.currentPage !== 0) {
+        document.getElementsByTagName('body')[0].classList.add('scrolled');
+      } else {
+        document.getElementsByTagName('body')[0].classList.remove('scrolled');
+      }
+    }
+
     function getCurrentPage() {
       self.pages = document.querySelectorAll('.js-stroll-page');
       self.currentPage = Math.floor(window.scrollY / self.pages[0].offsetHeight);
+      toggleScrollerClass();
     }
   }
 
@@ -72,7 +80,8 @@ export class PageScroller {
     this.scrollToPage(this.pages[this.currentPage]);
   }
 
-  scrollToPage(page: HTMLElement) {
+  private scrollToPage(page: HTMLElement) {
+    console.log('scrolled to ', page);
     try {
       const offset = page.getBoundingClientRect().top + pageYOffset;
 
@@ -85,7 +94,13 @@ export class PageScroller {
         (<any>window).scrollTo(0, offset);
       }
     } catch {
-      console.log('there is no sectionElement');
+      console.error('there is no sectionElement');
     }
+  }
+
+  scrollToTop() {
+    this.currentPage = 0;
+    window.scroll({top: 0, behavior: 'smooth'});
+    document.getElementsByTagName('body')[0].classList.remove('scrolled');
   }
 }
